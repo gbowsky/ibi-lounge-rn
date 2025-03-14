@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lounge-app",
+    "name": "IBI Lounge",
     "slug": "lounge-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,13 +9,22 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "space.utme.lounge-app",
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.space.utme.lounge"]
+      },
+      "appleTeamId": "89P49T5697",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#087A83"
+      },
+      "package": "space.utme.loungeapp"
     },
     "web": {
       "bundler": "metro",
@@ -30,9 +39,11 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#087A83"
         }
-      ]
+      ],
+      "expo-localization",
+      "@bacons/apple-targets"
     ],
     "experiments": {
       "typedRoutes": true
