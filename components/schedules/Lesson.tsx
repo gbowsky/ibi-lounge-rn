@@ -1,12 +1,26 @@
-import { LessonItem } from "@/stores/api/SchedulesSlice";
-import { View, StyleSheet, Linking } from "react-native";
-import { List, Text } from "react-native-paper";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, StyleSheet, Linking, Pressable, Dimensions } from "react-native";
+import { Divider, Text, useTheme } from "react-native-paper";
 
-import { LessonAside } from "./LessonAside";
-import { useTheme } from "@react-navigation/native";
 import { isWithinInterval, parse } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { LessonType } from "./LessonType";
+import { useSettingsStore } from "@/stores/UserPrefs";
+
+import { i18n } from "@/lib/localization";
+import { LessonItem } from "@/lib/api/schedules";
+const PRIORITY_MAP = {
+  lecture: "#769CDF",
+  practice: "#769CDF",
+  consultation: "#FFDE3F",
+  subject_report_with_grade: "#FFDE3F",
+  exam: "#FF5449",
+  subject_report: "#FFDE3F",
+  course_work_defend: "#FF5449",
+  library_day: "#769CDF",
+  project_work: "#769CDF",
+  meeting: "#FFDE3F",
+  unknown: "#FFDE3F",
+};
 
 interface LessonProps {
   lesson: LessonItem;
@@ -15,8 +29,10 @@ interface LessonProps {
 
 export const Lesson = (props: LessonProps) => {
   const [isNow, setNow] = useState(false);
+  const { mode } = useSettingsStore();
   const { lesson, isThisDay } = props;
-  const { dark } = useTheme();
+  const { dark, colors } = useTheme();
+  const windowWidth = Dimensions.get("window").width;
 
   function checkIfLessonIsNow() {
     const start = parse(lesson.time_start, "HH:mm", new Date());
@@ -47,52 +63,102 @@ export const Lesson = (props: LessonProps) => {
   }, [lesson, isThisDay]);
 
   return (
-    // @ts-expect-error: Динамические стили
-    <View style={styles.root(dark, isNow)}>
-      {dark && (
-        <LinearGradient
-          colors={isNow ? ["#001730", "#000"] : ["#111111", "#000"]}
-          // @ts-expect-error: Динамические стили
-          style={styles.background}
-        />
-      )}
-      <List.Item
-        background={{ foreground: true }}
-        disabled={!lesson.additional.url}
+    <View>
+      <Pressable
         onPress={() => {
           if (lesson.additional?.url) {
             Linking.openURL(lesson.additional.url);
           }
         }}
-        title={
-          <View>
-            {isNow ? (
-              // @ts-expect-error: Динамические стили
-              <Text style={styles.nowText}>Сейчас</Text>
-            ) : (
-              <Text>
-                {lesson.time_start} - {lesson.time_end}
+      >
+        <View style={styles.newRoot}>
+          <View
+            style={{
+              backgroundColor: PRIORITY_MAP[lesson.additional.type],
+              width: 4,
+              borderRadius: 4,
+              marginRight: 8,
+              boxShadow: isNow
+                ? `0 6px 12px 0 ${PRIORITY_MAP[lesson.additional.type]}AA,
+                0 -6px 12px 0 ${PRIORITY_MAP[lesson.additional.type]}AA,
+                4px 0 24px 0 ${PRIORITY_MAP[lesson.additional.type]}`
+                : "none",
+            }}
+          />
+          <View
+            style={{
+              ...styles.left,
+              maxWidth: windowWidth - 82,
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "baseline", gap: 4 }}
+            >
+              {lesson.additional.type && (
+                <LessonType type={lesson.additional.type} />
+              )}
+              {lesson.additional?.is_online || lesson.additional?.url ? (
+                <LessonType type="online" />
+              ) : (
+                <LessonType classroom={lesson.additional.classroom} />
+              )}
+            </View>
+            <View
+              style={{
+                flexShrink: 1,
+              }}
+            >
+              <Text variant="bodyMedium" style={{ fontWeight: 500 }}>
+                {lesson.text}{" "}
+                <Text style={{ color: colors.secondary }} variant="bodyMedium">
+                  {lesson.additional?.teacher_groups
+                    ? lesson.additional?.teacher_groups.join(", ")
+                    : lesson.additional?.teacher_name
+                      ? lesson.additional?.teacher_name
+                      : "schedules.unknown_teacher"}
+                </Text>
+                {lesson.additional?.compensation && (
+                  <Text variant="bodyMedium">
+                    {i18n.get("schedules.compensation_for")}{" "}
+                    {lesson.additional.compensation}
+                  </Text>
+                )}
               </Text>
-            )}
-            <Text variant="bodyLarge">{lesson.text}</Text>
+            </View>
           </View>
-        }
-        description={
-          <Text>
-            {lesson.additional?.teacher_groups
-              ? lesson.additional?.teacher_groups.join(", ")
-              : lesson.additional?.teacher_name
-                ? lesson.additional?.teacher_name
-                : "Неизвестный преподаватель"}
-          </Text>
-        }
-        right={() => <LessonAside additional={lesson.additional} />}
-      />
+          <View>
+            <View>
+              {isNow ? (
+                <Text variant="bodyMedium" style={styles.nowText}>
+                  {i18n.get("scheules.lesson_now")}
+                </Text>
+              ) : (
+                <>
+                  <Text variant="bodyMedium" style={{ textAlign: "right" }}>
+                    {lesson.time_start}
+                  </Text>
+                  <Text
+                    variant="bodyMedium"
+                    style={{ color: colors.secondary, textAlign: "right" }}
+                  >
+                    {lesson.time_end}
+                  </Text>
+                </>
+              )}
+            </View>
+          </View>
+        </View>
+      </Pressable>
+      <Divider style={styles.divider} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  divider: {
+    marginHorizontal: 16,
+    marginLeft: 28,
+  },
   background: {
     borderRadius: 12,
     position: "absolute",
@@ -105,42 +171,12 @@ const styles = StyleSheet.create({
     color: "#5B98E1",
     fontWeight: 600,
   },
-  // @ts-expect-error: Динамические стили
-  root: (isDark: boolean, isNow: boolean) => {
-    const defaults = {
-      marginBottom: -6,
-      marginHorizontal: 12,
-      borderRadius: 12,
-    };
-
-    if (isNow) {
-      if (isDark) {
-        return {
-          ...defaults,
-          boxShadow:
-            "0px -11px 24px 0px rgba(0, 153, 255, 0.12), 0px -2px 2px 0px rgba(0, 77, 255, 0.35)",
-        };
-      }
-
-      return {
-        ...defaults,
-        boxShadow:
-          "0px -13px 14px 0px rgba(187, 197, 255, 0.22), 0px -6px 10px 0px rgba(229, 238, 255, 0.04), 0px -1px 2px 0px rgba(42, 0, 163, 0.13)",
-      };
-    }
-
-    if (isDark) {
-      return {
-        ...defaults,
-        boxShadow:
-          "0px -13px 14px 0px rgba(255, 255, 255, 0.03), 0px -6px 10px 0px rgba(255, 255, 255, 0.02), 0px -1px 2px 0px rgba(255, 255, 255, 0.11);",
-      };
-    }
-
-    return {
-      ...defaults,
-      boxShadow:
-        "0px -13px 14px 0px rgba(0, 0, 0, 0.03), 0px -6px 10px 0px rgba(0, 0, 0, 0.02), 0px -1px 2px 0px rgba(0, 0, 0, 0.11)",
-    };
+  newRoot: {
+    flexDirection: "row",
+    marginHorizontal: 15,
+    paddingVertical: 12,
+  },
+  left: {
+    flexGrow: 1,
   },
 });

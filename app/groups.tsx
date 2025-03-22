@@ -1,3 +1,4 @@
+import { GlobalIcon } from "@/components/ui/GlobalIcon";
 import { StoredItem, useSettingsStore } from "@/stores/UserPrefs";
 import { router, useNavigation } from "expo-router";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -85,14 +86,21 @@ export default function GroupsSelect() {
   return (
     <SafeAreaView>
       <FlatList
-        contentInsetAdjustmentBehavior="automatic"
+        automaticallyAdjustContentInsets
+        automaticallyAdjustsScrollIndicatorInsets
+        automaticallyAdjustKeyboardInsets
+        contentInsetAdjustmentBehavior="always"
         refreshing={loading}
         data={query ? filtered : groups}
         keyExtractor={(item) => `group-${item.id}-${query ? "searching" : ""}`}
         renderItem={({ item }) => {
           return (
             <List.Item
-              right={() => item.id === group.id && <List.Icon icon="check" />}
+              right={({ color }) =>
+                item.id === group.id && (
+                  <GlobalIcon color={color} size={28} icon="check" />
+                )
+              }
               onPress={() => {
                 setGroup(item);
                 router.back();

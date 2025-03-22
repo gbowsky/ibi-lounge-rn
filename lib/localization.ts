@@ -3,6 +3,11 @@ import { I18n } from "i18n-js";
 // Set the key-value pairs for the different languages you want to support.
 export const i18n = new I18n({
   en: {
+    screens: {
+      schedules: "Расписание",
+      grades: "Оценки",
+      settings: "Настройки",
+    },
     setup: {
       welcome: "Welcome to\nIBI Lounge!",
       description:
@@ -59,8 +64,42 @@ export const i18n = new I18n({
       absence: "no-show",
       not_admitted: "not admitted",
     },
+
+    no_lessons: {
+      title: "No lessons",
+      desc: "Or IBI's site decided to go down temporarily",
+      try_again: "Reload",
+    },
+
+    no_grades: {
+      title: "No grades",
+      desc: "Or IBI's site decided to go down temporarily",
+      try_again: "Reload",
+    },
+
+    calendar: {
+      title: "Add schedule to calendar app",
+      description:
+        "Copy link below and use it to subscribe inside your calendar app — then your schedule will be available inside your regular calendar app!",
+      descriptionIntent:
+        "Press the button below to add your schedule into your calendar app",
+      subscribe: "Subscribe to ",
+      link: "Your link:",
+      close: "Cancel",
+    },
+
+    settings: {
+      features: "Features",
+    },
+
+    lessonNow: "Now",
   },
   ru: {
+    screens: {
+      schedules: "Расписание",
+      grades: "Оценки",
+      settings: "Настройки",
+    },
     setup: {
       welcome: "Встречайте\nIBI Lounge!",
       description:
@@ -78,16 +117,30 @@ export const i18n = new I18n({
     teacher: "Преподаватель",
 
     types: {
-      lecture: "📚Лекция",
-      practice: "⚒️Практика",
-      consultation: "⚠️Консультация",
-      subject_report_with_grade: "⚠️Диф. зачёт",
-      exam: "🔥Экзамен",
-      subject_report: "⚠️Зачёт",
-      course_work_defend: "⚠️Защита курсовой",
-      library_day: "📚Библ. день",
-      project_work: "⚒️Проектная деят.",
-      meeting: "📅Собрание",
+      lecture: "Лекция",
+      practice: "Практика",
+      consultation: "Консультация",
+      subject_report_with_grade: "Диф. зачёт",
+      exam: "Экзамен",
+      subject_report: "Зачёт",
+      course_work_defend: "Защита курсовой",
+      library_day: "Библ. день",
+      project_work: "Проектная деят.",
+      meeting: "Собрание",
+      online: "Онлайн",
+    },
+    icon_types: {
+      lecture: "human-male-board",
+      practice: "hammer-screwdriver",
+      consultation: "alert",
+      subject_report_with_grade: "alert",
+      exam: "fire-circle",
+      subject_report: "alert",
+      course_work_defend: "alert",
+      library_day: "book-multiple",
+      project_work: "hammer-screwdriver",
+      meeting: "calendar-account",
+      online: "web",
     },
     online: "🌎Онлайн",
 
@@ -111,5 +164,40 @@ export const i18n = new I18n({
       absence: "н/я",
       not_admitted: "н/доп.",
     },
+
+    no_lessons: {
+      title: "Пар нет",
+      desc: "Или МБИ временно отдаёт пустое расписание",
+      try_again: "Обновить",
+    },
+
+    no_grades: {
+      title: "Ничего не найдено",
+      desc: "Или МБИ временно не отдаёт список оценок",
+      try_again: "Обновить",
+    },
+
+    schedules: {
+      unknown_teacher: "Неизвестный преподаватель",
+      lesson_now: "Сейчас",
+      compensation_for: "Компенсация за",
+    },
+
+    calendar: {
+      title: "Добавление в календарь",
+      description:
+        "Скопируйте ссылку ниже и воспользуйтесь ей для подписки в вашем календарном приложении — так ваше расписание будет доступно внутри обычного календаря!",
+      descriptionIntent:
+        "Нажмите на кнопку ниже чтобы подписаться на календарь для вашей группы — так ваше расписание будет доступно внутри обычного календаря!",
+      subscribe: "Подписаться на расписание ",
+      link: "Ваша ссылка:",
+      close: "Отмена",
+    },
+
+    settings: {
+      features: "Фишки",
+    },
+
+    lessonNow: "Сейчас",
   },
 });

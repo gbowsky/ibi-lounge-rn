@@ -1,8 +1,9 @@
+import { GlobalIcon } from "@/components/ui/GlobalIcon";
 import { i18n } from "@/lib/localization";
 import { useApiStore } from "@/stores/ApiStore";
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { TextInput, Text, List, Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -31,14 +32,18 @@ export default function DataSetupScreen() {
             <List.Item
               style={styles.paddedH}
               onPress={() => router.push("/levels")}
-              left={() => <List.Icon icon="school-outline" />}
+              left={({ color }) => (
+                <GlobalIcon color={color} size={28} icon="school-outline" />
+              )}
               title={i18n.get("educationLevel")}
               description={educationLevel.name}
             />
             <List.Item
               style={styles.paddedH}
               onPress={() => router.push("/groups")}
-              left={() => <List.Icon icon="folder-outline" />}
+              left={({ color }) => (
+                <GlobalIcon color={color} size={28} icon="folder-outline" />
+              )}
               title={i18n.get("yourGroup")}
               description={group.name}
             />
@@ -48,7 +53,9 @@ export default function DataSetupScreen() {
           <List.Item
             style={styles.paddedH}
             onPress={() => router.push("/teachers")}
-            left={() => <List.Icon icon="school-outline" />}
+            left={({ color }) => (
+              <GlobalIcon color={color} size={28} icon="school-outline" />
+            )}
             title={i18n.get("teacher")}
             description={teacher.name}
           />
@@ -57,7 +64,7 @@ export default function DataSetupScreen() {
 
       {mode === "student" && (
         <>
-          <View style={styles.inputs}>
+          <KeyboardAvoidingView style={styles.inputs}>
             <TextInput
               label={i18n.get("yourLastName")}
               placeholder="Введите фамилию"
@@ -70,7 +77,7 @@ export default function DataSetupScreen() {
               value={pin}
               onChangeText={(pin) => setPin(pin)}
             />
-          </View>
+          </KeyboardAvoidingView>
         </>
       )}
 

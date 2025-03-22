@@ -6,7 +6,7 @@ const GradesTab = () => {
     <View style={{ flex: 1 }}>
       <Stack>
         <Stack.Screen
-          name="grades"
+          name="settings"
           options={{
             headerShown: true,
             contentStyle: {
@@ -16,7 +16,7 @@ const GradesTab = () => {
             headerTransparent: Platform.OS === "ios",
             headerBlurEffect:
               Platform.OS === "ios" ? "systemThinMaterial" : undefined,
-            title: "Оценки",
+            title: "Настройки",
             headerLargeStyle: {
               backgroundColor: "transparent",
             },

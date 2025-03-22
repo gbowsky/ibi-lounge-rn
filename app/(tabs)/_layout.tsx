@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
+import { i18n } from "@/lib/localization";
+import { GlobalIcon } from "@/components/ui/GlobalIcon";
 
 export default function TabLayout() {
   const { mode } = useSettingsStore();
@@ -11,6 +13,9 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        sceneStyle: {
+          backgroundColor: "transparent",
+        },
         tabBarStyle: {
           position: "absolute",
         },
@@ -19,26 +24,22 @@ export default function TabLayout() {
             ? () => {
                 return (
                   <BlurView
-                    intensity={100}
-                    tint="systemChromeMaterial"
+                    intensity={80}
+                    tint="systemThinMaterial"
                     style={StyleSheet.absoluteFill}
                   />
                 );
               }
             : undefined,
+        headerShown: false,
       }}
     >
       <Tabs.Screen
         name="(schedules)"
         options={{
-          title: "Главная",
-          headerShown: false,
+          title: i18n.get("screens.schedules"),
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              size={24}
-              name="calendar-clock"
-              color={color}
-            />
+            <GlobalIcon size={24} icon="calendar-clock" color={color} />
           ),
         }}
       />
@@ -46,27 +47,18 @@ export default function TabLayout() {
         name="(grades)"
         options={{
           href: mode === "teacher" ? null : "/(tabs)/(grades)/grades",
-          title: "Оценки",
-          headerShown: false,
+          title: i18n.get("screens.grades"),
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              size={24}
-              name="format-list-text"
-              color={color}
-            />
+            <GlobalIcon size={24} icon="format-list-text" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="(settings)"
         options={{
-          title: "Настройки",
+          title: i18n.get("screens.settings"),
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              size={24}
-              name="cog-outline"
-              color={color}
-            />
+            <GlobalIcon size={24} icon="cog-outline" color={color} />
           ),
         }}
       />

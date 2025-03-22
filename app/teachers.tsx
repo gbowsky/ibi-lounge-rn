@@ -10,13 +10,7 @@ import {
   TextInputChangeEventData,
   useColorScheme,
 } from "react-native";
-import {
-  Text,
-  Button,
-  ActivityIndicator,
-  List,
-  TextInput,
-} from "react-native-paper";
+import { Text, Button, ActivityIndicator, List } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TeachersSelect() {
@@ -65,7 +59,7 @@ export default function TeachersSelect() {
 
   useEffect(() => {
     void getTeachers();
-  }, []);
+  }, [teacher]);
 
   useEffect(() => {
     if (query) {
@@ -87,22 +81,16 @@ export default function TeachersSelect() {
     );
 
   return (
-    <SafeAreaView style={style.list} edges={{ top: "off" }}>
+    <SafeAreaView>
       {loading ? (
         <ActivityIndicator size="large" style={style.spinner} />
       ) : (
         <>
-          <TextInput
-            autoFocus
-            autoCorrect={false}
-            autoCapitalize="none"
-            left={<TextInput.Icon icon="text-search" />}
-            mode="outlined"
-            placeholder="Поиск по группам"
-            value={query}
-            onChangeText={(query) => setQuery(query)}
-          />
           <FlatList
+            automaticallyAdjustsScrollIndicatorInsets
+            automaticallyAdjustKeyboardInsets
+            automaticallyAdjustContentInsets
+            contentInsetAdjustmentBehavior="automatic"
             data={query ? filtered : teachers}
             renderItem={({ item }) => (
               <List.Item
@@ -127,8 +115,5 @@ export default function TeachersSelect() {
 const style = StyleSheet.create({
   spinner: {
     padding: 24,
-  },
-  list: {
-    marginBottom: Platform.OS === "ios" ? 48 + 32 : 0,
   },
 });

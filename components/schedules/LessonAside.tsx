@@ -1,7 +1,7 @@
+import { LessonItem } from "@/lib/api/schedules";
 import { i18n } from "@/lib/localization";
-import { LessonItem } from "@/stores/api/SchedulesSlice";
 import { View, StyleSheet } from "react-native";
-import { Text } from "react-native-paper";
+import { Icon, Text, useTheme } from "react-native-paper";
 import * as ContextMenu from "zeego/context-menu";
 
 interface LessonAsideProps {
@@ -10,19 +10,37 @@ interface LessonAsideProps {
 
 export const LessonAside = (props: LessonAsideProps) => {
   const { additional } = props;
+  const theme = useTheme();
 
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <View>
-          <Text style={styles.lessonSide}>
-            {i18n.get("types." + additional.type)}
-          </Text>
-          <Text style={styles.lessonSide}>
-            {additional.is_online
-              ? i18n.get("online")
-              : `🗺️${additional.classroom}`}
-          </Text>
+        <View
+          style={
+            additional?.url || additional.is_online
+              ? { ...styles.root, ...styles.onlineRoot }
+              : styles.root
+          }
+        >
+          <View>
+            <Text style={styles.lessonSide}>
+              {i18n.get("types." + additional.type)}
+            </Text>
+            <Text style={styles.lessonSide}>
+              {additional.is_online
+                ? i18n.get("online")
+                : `🗺️${additional.classroom}`}
+            </Text>
+          </View>
+          {(additional?.url || additional.is_online) && (
+            <View style={styles.onlineIcon}>
+              <Icon
+                color={theme.colors.secondary}
+                size={24}
+                source="chevron-right"
+              />
+            </View>
+          )}
         </View>
       </ContextMenu.Trigger>
       <ContextMenu.Content>
@@ -66,8 +84,20 @@ export const LessonAside = (props: LessonAsideProps) => {
 };
 
 const styles = StyleSheet.create({
+  root: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
+  onlineRoot: {
+    marginRight: 4,
+  },
+  onlineIcon: {
+    marginLeft: 4,
+  },
   lessonSide: {
     textAlign: "right",
-    marginBottom: 2,
+    marginBottom: 6,
   },
 });

@@ -1,9 +1,8 @@
-import { DayItem } from "@/stores/api/SchedulesSlice";
 import { List, Text } from "react-native-paper";
 import { Lesson } from "./Lesson";
 import { StyleSheet, View } from "react-native";
 import { isToday, parse } from "date-fns";
-import { useApiStore } from "@/stores/ApiStore";
+import { DayItem } from "@/lib/api/schedules";
 
 interface DayProps {
   day: DayItem;
@@ -18,12 +17,10 @@ export const Day = (props: DayProps) => {
 
   return (
     <List.Section>
-      <List.Subheader>
-        <Text variant="titleLarge">
-          {day.week_day}, {day.day}.{day.month}
-        </Text>
-      </List.Subheader>
-      <View style={styles.lessons}>
+      <Text style={styles.title} variant="titleMedium">
+        {day.week_day}, {day.day}.{day.month}
+      </Text>
+      <View>
         {day.lessons.map((lesson, index) => (
           <Lesson
             isThisDay={isThisDay}
@@ -37,7 +34,9 @@ export const Day = (props: DayProps) => {
 };
 
 const styles = StyleSheet.create({
-  lessons: {
-    gap: -12,
+  title: {
+    marginHorizontal: 15,
+    fontWeight: 800,
+    marginBottom: 12,
   },
 });

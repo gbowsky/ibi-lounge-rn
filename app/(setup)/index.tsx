@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { Button, Text } from "react-native-paper";

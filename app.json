@@ -12,7 +12,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "space.utme.lounge-app",
       "entitlements": {
-        "com.apple.security.application-groups": ["group.space.utme.lounge"]
+        "com.apple.security.application-groups": [
+          "group.space.utme.lounge"
+        ]
       },
       "appleTeamId": "89P49T5697",
       "infoPlist": {
@@ -47,6 +49,31 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "space.utme.lounge-app.widget",
+                  "targetName": "widget",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.space.utme.lounge"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "bd7837a2-01b1-4778-958d-acbdb5b91a48"
+      }
     }
   }
 }

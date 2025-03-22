@@ -1,7 +1,7 @@
+import { GlobalIcon } from "@/components/ui/GlobalIcon";
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { router, Stack } from "expo-router";
 import { Platform, View } from "react-native";
-import { IconButton } from "react-native-paper";
 import * as DropDownMenu from "zeego/dropdown-menu";
 
 function HeaderRight() {
@@ -9,7 +9,7 @@ function HeaderRight() {
   return (
     <DropDownMenu.Root>
       <DropDownMenu.Trigger>
-        <IconButton icon="dots-horizontal-circle" />
+        <GlobalIcon size={24} icon="dots-horizontal-circle" />
       </DropDownMenu.Trigger>
       <DropDownMenu.Content>
         <DropDownMenu.Item
@@ -35,15 +35,19 @@ const SchedulesTab = () => {
         <Stack.Screen
           name="index"
           options={{
-            headerShown: true,
+            contentStyle: {
+              backgroundColor: "transparent",
+            },
             headerLargeTitle: true,
             headerTransparent: Platform.OS === "ios",
-            headerBlurEffect: Platform.OS === "ios" ? "prominent" : undefined,
-            headerTitle: "Расписание",
+            headerBlurEffect:
+              Platform.OS === "ios" ? "systemThinMaterial" : undefined,
+            title: "Расписание",
             headerLargeStyle: {
               backgroundColor: "transparent",
             },
             headerRight: () => <HeaderRight />,
+            headerShadowVisible: false,
           }}
         />
       </Stack>

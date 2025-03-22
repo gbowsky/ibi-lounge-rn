@@ -1,25 +1,23 @@
+import { NoGrades } from "@/components/grades/NoGrades";
+import { GlobalScreen } from "@/components/ui/GlobalScreen";
+import { GradeItem } from "@/lib/api/grades";
 import { i18n } from "@/lib/localization";
 import { useApiStore } from "@/stores/ApiStore";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useLayoutEffect, useState } from "react";
 import {
   StyleSheet,
-  FlatList,
-  View,
   TextInputChangeEventData,
   NativeSyntheticEvent,
   useColorScheme,
 } from "react-native";
-import { Card, List, Text } from "react-native-paper";
+import { List, Text } from "react-native-paper";
 
 export default function GradesScreen({}) {
-  const [refreshing, setRefreshing] = useState(false);
-  const { grades, loadGrades } = useApiStore();
+  const { grades, loadGrades, gradesLoading } = useApiStore();
   const [filteredGrades, setFiltered] = useState(grades);
   const [query, setQuery] = useState("");
   const nav = useNavigation();
-  const tabbarHeight = useBottomTabBarHeight();
   const colorScheme = useColorScheme();
 
   useLayoutEffect(() => {
@@ -41,10 +39,8 @@ export default function GradesScreen({}) {
   });
 
   async function fetchData() {
-    setRefreshing(true);
     await loadGrades();
     setFiltered(grades);
-    setRefreshing(false);
   }
 
   useEffect(() => {
@@ -56,14 +52,15 @@ export default function GradesScreen({}) {
   }, [query]);
 
   return (
-    <View>
-      <FlatList
-        contentInsetAdjustmentBehavior="automatic"
-        onRefresh={() => fetchData()}
-        refreshing={refreshing}
-        data={query ? filteredGrades : grades}
-        keyExtractor={(_, index) => `grade-${index}`}
-        renderItem={({ item, index }) => (
+    <GlobalScreen<GradeItem>
+      title={i18n.get("screens.grades")}
+      largeTitle
+      flatListProps={{
+        onRefresh: () => fetchData(),
+        refreshing: gradesLoading,
+        data: query ? filteredGrades : grades,
+        keyExtractor: (_, index) => `grade-${index}`,
+        renderItem: ({ item, index }) => (
           <List.Item
             titleEllipsizeMode="middle"
             key={`grade-${index}`}
@@ -75,18 +72,12 @@ export default function GradesScreen({}) {
               </Text>
             )}
           />
-        )}
-        ListFooterComponent={<View style={{ height: tabbarHeight }} />}
-        ListEmptyComponent={
-          <Card>
-            <Card.Title title="Ничего нет" />
-            <Card.Content>
-              <Text>Попробуйте свайпнуть</Text>
-            </Card.Content>
-          </Card>
-        }
-      />
-    </View>
+        ),
+        ListEmptyComponent: (
+          <NoGrades loading={gradesLoading} onReload={() => loadGrades()} />
+        ),
+      }}
+    />
   );
 }
 

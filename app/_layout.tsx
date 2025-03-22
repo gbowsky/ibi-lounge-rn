@@ -1,4 +1,3 @@
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -15,6 +14,7 @@ import { i18n } from "@/lib/localization";
 import { getLocales } from "expo-localization";
 import { setDefaultOptions } from "date-fns";
 import { useSettingsStore } from "@/stores/UserPrefs";
+import { GlobalBackground } from "@/components/ui/GlobalBackground";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,28 +23,29 @@ setDefaultOptions({ weekStartsOn: 1 });
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
   const { mode } = useSettingsStore();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+    SplashScreen.hideAsync();
+  }, []);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <PaperProvider>
+        <GlobalBackground colorScheme={colorScheme ?? "light"} />
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(setup)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+              animation: "fade",
+              contentStyle: {
+                backgroundColor: "transparent",
+              },
+            }}
+          />
           <Stack.Screen name="+not-found" />
           <Stack.Screen
             name="levels"
