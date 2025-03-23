@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { useApiStore } from "./ApiStore";
+import { ExtensionStorage } from "@bacons/apple-targets";
+
+const nativeStorage = new ExtensionStorage("group.space.utme.lounge");
 
 export interface StoredItem {
   name: string;
@@ -31,7 +34,7 @@ export const useSettingsStore = create<SettingsStore>()(
   persist(
     (set, get) => ({
       teacher: { name: "Любой", id: "0" },
-      group: { name: "113-ПИвЭ", id: "2352" },
+      group: { name: "123-ПИвЭ", id: "1482" },
       educationLevel: { name: "бакалавриат", id: "1" },
       onboardingPassed: false,
       lastName: "",
@@ -40,11 +43,16 @@ export const useSettingsStore = create<SettingsStore>()(
 
       setOnboardingPassed: (hasPassed) => set({ onboardingPassed: hasPassed }),
       setGroup: (newGrp) => {
+        nativeStorage.set("group", newGrp as unknown as Record<string, string>);
         set({ group: newGrp });
         if (get().mode === "student")
           useApiStore.getState().loadSchedules(get().mode);
       },
       setTeacher: (newTeacher) => {
+        nativeStorage.set(
+          "teacher",
+          newTeacher as unknown as Record<string, string>,
+        );
         set({ teacher: newTeacher });
         if (get().mode === "teacher")
           useApiStore.getState().loadSchedules(get().mode);
@@ -54,6 +62,7 @@ export const useSettingsStore = create<SettingsStore>()(
       setPin: (pin) => set({ pin }),
       setMode: (mode) => {
         set({ mode });
+        nativeStorage.set("mode", mode);
         useApiStore.getState().loadSchedules(mode);
       },
     }),

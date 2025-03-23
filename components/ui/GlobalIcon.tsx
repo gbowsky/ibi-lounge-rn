@@ -2,7 +2,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Platform } from "react-native";
 import { SFSymbol, SymbolView } from "expo-symbols";
 import { convertToHex } from "@/lib/colors";
+import { ComponentProps } from "react";
 
+type Props = ComponentProps<typeof MaterialCommunityIcons>;
 const iconsMap: Record<string, SFSymbol> = {
   "calendar-clock": "calendar.badge.clock",
   "format-list-text": "list.bullet",
@@ -28,12 +30,12 @@ export const GlobalIcon = ({
   size = 20,
   color,
 }: {
-  icon: string;
+  icon: Props["name"];
   size: number;
   color?: string;
 }) => {
   if (!["ios", "macos"].includes(Platform.OS)) {
-    return <MaterialCommunityIcons icon={icon} size={size} color={color} />;
+    return <MaterialCommunityIcons name={icon} size={size} color={color} />;
   }
   const finalColor = color ? convertToHex(color) : undefined;
 

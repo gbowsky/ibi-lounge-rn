@@ -1,15 +1,21 @@
 import { GlobalIcon } from "@/components/ui/GlobalIcon";
 import { useSettingsStore } from "@/stores/UserPrefs";
+import { useTheme } from "@react-navigation/native";
 import { router, Stack } from "expo-router";
 import { Platform, View } from "react-native";
 import * as DropDownMenu from "zeego/dropdown-menu";
 
 function HeaderRight() {
+  const theme = useTheme();
   const { mode } = useSettingsStore();
   return (
     <DropDownMenu.Root>
       <DropDownMenu.Trigger>
-        <GlobalIcon size={24} icon="dots-horizontal-circle" />
+        <GlobalIcon
+          color={theme.colors.text}
+          size={24}
+          icon="dots-horizontal-circle"
+        />
       </DropDownMenu.Trigger>
       <DropDownMenu.Content>
         <DropDownMenu.Item

@@ -12,9 +12,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "space.utme.lounge-app",
       "entitlements": {
-        "com.apple.security.application-groups": [
-          "group.space.utme.lounge"
-        ]
+        "com.apple.security.application-groups": ["group.space.utme.lounge"]
       },
       "appleTeamId": "89P49T5697",
       "infoPlist": {
