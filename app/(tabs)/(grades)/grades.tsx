@@ -14,7 +14,7 @@ import {
 import { List, Text } from "react-native-paper";
 
 export default function GradesScreen({}) {
-  const { grades, loadGrades, gradesLoading } = useApiStore();
+  const { grades, loadGrades, gradesLoading, gradesError } = useApiStore();
   const [filteredGrades, setFiltered] = useState(grades);
   const [query, setQuery] = useState("");
   const nav = useNavigation();
@@ -74,7 +74,11 @@ export default function GradesScreen({}) {
           />
         ),
         ListEmptyComponent: (
-          <NoGrades loading={gradesLoading} onReload={() => loadGrades()} />
+          <NoGrades
+            loading={gradesLoading}
+            code={gradesError}
+            onReload={() => loadGrades()}
+          />
         ),
       }}
     />

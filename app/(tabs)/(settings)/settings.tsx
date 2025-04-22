@@ -3,7 +3,7 @@ import { GlobalScreen } from "@/components/ui/GlobalScreen";
 import { i18n } from "@/lib/localization";
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { Divider, List, Switch, TextInput } from "react-native-paper";
 
 export default function SettingsScreen() {
@@ -18,6 +18,8 @@ export default function SettingsScreen() {
     setPin,
     mode,
     setMode,
+    blurAndroidEnabled,
+    setBlurAndroidEnabled,
   } = useSettingsStore();
 
   return (
@@ -28,7 +30,9 @@ export default function SettingsScreen() {
         children: (
           <>
             <List.Section>
-              <List.Subheader>Данные для расписания</List.Subheader>
+              <List.Subheader>
+                {i18n.get("settings.dataForSchedule")}
+              </List.Subheader>
               <List.Item
                 style={styles.hPadded}
                 left={({ color }) => (
@@ -42,7 +46,7 @@ export default function SettingsScreen() {
                     }
                   />
                 )}
-                title="Режим преподавателя"
+                title={i18n.get("settings.teacherMode")}
               />
               {mode === "student" && (
                 <>
@@ -56,7 +60,7 @@ export default function SettingsScreen() {
                         icon="school-outline"
                       />
                     )}
-                    title="Уровень образования"
+                    title={i18n.get("settings.educationLevel")}
                     description={educationLevel.name}
                   />
                   <List.Item
@@ -69,7 +73,7 @@ export default function SettingsScreen() {
                         icon="folder-outline"
                       />
                     )}
-                    title="Ваша группа"
+                    title={i18n.get("settings.group")}
                     description={group.name}
                   />
                 </>
@@ -95,12 +99,14 @@ export default function SettingsScreen() {
             <Divider />
             {mode === "student" && (
               <List.Section>
-                <List.Subheader>Данные для оценок</List.Subheader>
+                <List.Subheader>
+                  {i18n.get("settings.dataForGrades")}
+                </List.Subheader>
                 <TextInput
                   style={styles.hInset}
                   mode="outlined"
-                  label="Ваша фамилия"
-                  placeholder="Введите фамилию"
+                  label={i18n.get("settings.lastName")}
+                  placeholder={i18n.get("settings.enterLastName")}
                   value={lastName}
                   onChangeText={(lastName) => setLastName(lastName)}
                 />
@@ -108,8 +114,8 @@ export default function SettingsScreen() {
                 <TextInput
                   style={styles.hInset}
                   mode="outlined"
-                  label="Ваш ПИН"
-                  placeholder="Есть в студаке или договоре с вузом"
+                  label={i18n.get("settings.pin")}
+                  placeholder={i18n.get("settings.enterPin")}
                   value={pin}
                   onChangeText={(pin) => setPin(pin)}
                 />
@@ -127,6 +133,24 @@ export default function SettingsScreen() {
                 title={i18n.get("calendar.title")}
                 onPress={() => router.push("/calendar-add")}
               />
+              {Platform.OS === "android" && (
+                <List.Item
+                  style={styles.hPadded}
+                  left={({ color }) => (
+                    <GlobalIcon color={color} size={28} icon="blur" />
+                  )}
+                  right={() => (
+                    <Switch
+                      value={blurAndroidEnabled}
+                      onValueChange={() =>
+                        setBlurAndroidEnabled(!blurAndroidEnabled)
+                      }
+                    />
+                  )}
+                  description={i18n.get("settings.blurEffectsDesc")}
+                  title={i18n.get("settings.blurEffectsTitle")}
+                />
+              )}
             </List.Section>
 
             <Divider />

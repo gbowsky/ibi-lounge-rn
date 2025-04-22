@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 import { SettingsStore, useSettingsStore } from "../UserPrefs";
-import { addDays } from "date-fns";
+import { addDays, endOfWeek, startOfWeek } from "date-fns";
 import { DayItem, getSchedules } from "@/lib/api/schedules";
 
 export interface SchedulesSlice {
@@ -29,10 +29,14 @@ export const createSchedulesSlice: StateCreator<
     const { group, teacher } = useSettingsStore.getState();
     const { selectedDate } = get();
 
-    const data = await getSchedules(selectedDate, addDays(selectedDate, 7), {
-      groupId: mode === "student" ? group.id : undefined,
-      teacherId: mode === "teacher" ? teacher.id : undefined,
-    });
+    const data = await getSchedules(
+      startOfWeek(selectedDate),
+      endOfWeek(addDays(selectedDate, 7)),
+      {
+        groupId: mode === "student" ? group.id : undefined,
+        teacherId: mode === "teacher" ? teacher.id : undefined,
+      },
+    );
 
     if (data) {
       set({ days: data, schedulesLoading: false });

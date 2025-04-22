@@ -7,15 +7,21 @@ import { Text, List, Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CalendarAddScreen() {
-  const { group } = useSettingsStore();
+  const { group, teacher, mode } = useSettingsStore();
   const [isWebCal, setWebCal] = useState(false);
 
+  const intentLink =
+    mode === "student"
+      ? `webcal://lounge.utme.space/calendar?group=${group.id}`
+      : `webcal://lounge.utme.space/calendar?teacher=${teacher.id}`;
+
+  const directLink =
+    mode === "student"
+      ? `https://lounge.utme.space/calendar?group=${group.id}`
+      : `https://lounge.utme.space/calendar?teacher=${teacher.id}`;
+
   async function canUseWebCal() {
-    setWebCal(
-      await Linking.canOpenURL(
-        "webcal://lounge.utme.space/calendar?group=" + group.id,
-      ),
-    );
+    setWebCal(await Linking.canOpenURL(intentLink));
   }
 
   useEffect(() => {
@@ -40,14 +46,10 @@ export default function CalendarAddScreen() {
             style={styles.hInset}
             mode="contained-tonal"
             onPress={async () => {
-              const can = await Linking.canOpenURL(
-                "webcal://lounge.utme.space/calendar?group=" + group.id,
-              );
+              const can = await Linking.canOpenURL(intentLink);
 
               if (can) {
-                Linking.openURL(
-                  "webcal://lounge.utme.space/calendar?group=" + group.id,
-                );
+                Linking.openURL(intentLink);
               } else {
                 Alert.alert(
                   "Не поддерживается",
@@ -57,18 +59,16 @@ export default function CalendarAddScreen() {
             }}
           >
             {i18n.get("calendar.subscribe")}
-            {group.name}
+            {mode === "teacher" ? teacher.name : group.name}
           </Button>
         ) : (
           <List.Item
             style={styles.hPadding}
             onPress={() => {
-              void Clipboard.setString(
-                `https://lounge.utme.space/calendar?group=${group.id}`,
-              );
+              void Clipboard.setString(directLink);
             }}
             titleNumberOfLines={2}
-            title={`https://lounge.utme.space/calendar?group=${group.id}`}
+            title={directLink}
           />
         )}
         <Button

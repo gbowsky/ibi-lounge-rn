@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/stores/UserPrefs";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
@@ -33,6 +34,7 @@ const MaterialHeader = ({
   transparent: boolean;
 }) => {
   const nativeTheme = useTheme();
+  const { blurAndroidEnabled } = useSettingsStore();
 
   return (
     <Appbar.Header
@@ -52,10 +54,15 @@ const SystemFooter = ({
   paddingBottom = 0,
 }: PropsWithChildren<{ paddingBottom?: number }>) => {
   const nativeTheme = useTheme();
+  const { blurAndroidEnabled } = useSettingsStore();
 
-  if (Platform.OS === "ios") {
+  if (Platform.OS === "ios" || blurAndroidEnabled) {
     return (
-      <BlurView tint="systemThinMaterial" intensity={100}>
+      <BlurView
+        experimentalBlurMethod="dimezisBlurView"
+        tint="systemChromeMaterial"
+        intensity={100}
+      >
         <Divider />
         {children}
         <View style={{ height: paddingBottom }} />

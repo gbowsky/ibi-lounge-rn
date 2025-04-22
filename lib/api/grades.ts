@@ -26,10 +26,17 @@ interface GradesGetParams {
   last_name: string;
 }
 
+interface RequestError {
+  code: "GRADES_DATA_MISMATCH";
+  message: string;
+  error: string;
+  statusCode: number;
+}
+
 export async function getGrades(
   pin: string,
   lastName: string,
-): Promise<GradeItem[] | false> {
+): Promise<GradeItem[] | RequestError | false> {
   const params: GradesGetParams = {
     pin: pin,
     last_name: lastName,
@@ -41,14 +48,14 @@ export async function getGrades(
   );
   try {
     const req = await fetch(url);
+    const json = await req.json();
 
     if (!req.ok) {
       console.warn("Something not right in getGrades response:", url);
-      console.log(await req.json());
-      return false;
+      console.log(json);
+      return json as RequestError;
     }
 
-    const json = await req.json();
     return json as GradeItem[];
   } catch (e) {
     console.error("getGrades: req error:", e);

@@ -6,9 +6,10 @@ import { Button, Text } from "react-native-paper";
 interface NoGradesProps {
   onReload: VoidFunction;
   loading?: boolean;
+  code?: string | null;
 }
 
-export const NoGrades = ({ onReload, loading }: NoGradesProps) => {
+export const NoGrades = ({ onReload, loading, code }: NoGradesProps) => {
   const anim = useAnimatedValue(0);
   const backAnim = useAnimatedValue(-15);
 
@@ -42,9 +43,11 @@ export const NoGrades = ({ onReload, loading }: NoGradesProps) => {
         </Text>
       </Animated.View>
       <Text style={styles.center} variant="headlineMedium">
-        {i18n.get("no_grades.title")}
+        {i18n.get(code ? `no_grades.${code}_title` : "no_grades.title")}
       </Text>
-      <Text style={styles.center}>{i18n.get("no_grades.desc")}</Text>
+      <Text style={styles.center}>
+        {i18n.get(code ? `no_grades.${code}_desc` : "no_grades.desc")}
+      </Text>
       <Button loading={loading} disabled={loading} onPress={() => onReload()}>
         {i18n.get("no_grades.try_again")}
       </Button>

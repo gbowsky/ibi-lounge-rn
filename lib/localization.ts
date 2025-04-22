@@ -1,4 +1,5 @@
 import { I18n } from "i18n-js";
+import { shadow } from "react-native-paper";
 
 // Set the key-value pairs for the different languages you want to support.
 export const i18n = new I18n({
@@ -75,6 +76,9 @@ export const i18n = new I18n({
       title: "No grades",
       desc: "Or IBI's site decided to go down temporarily",
       try_again: "Reload",
+      GRADES_DATA_MISMATCH_title: "Data mismatch",
+      GRADES_DATA_MISMATCH_desc:
+        "The entered last name does not match the PIN code",
     },
 
     calendar: {
@@ -90,7 +94,21 @@ export const i18n = new I18n({
 
     settings: {
       features: "Features",
+      teacherMode: "Teacher mode",
+      dataForGrades: "Data for grades",
+      dataForSchedule: "Data for schedule",
+      pin: "PIN",
+      enterPin: "Enter PIN",
+      group: "Group",
+      educationLevel: "Education level",
+      lastName: "Last name",
+      enterLastName: "Enter last name",
+      blurEffectsTitle: "Enable blur effects",
+      blurEffectsDesc: "May affect performance",
     },
+
+    show_groups_schedule: "Groups schedules",
+    show_teachers_schedule: "Teachers schedules",
 
     lessonNow: "Now",
   },
@@ -175,6 +193,8 @@ export const i18n = new I18n({
       title: "Ничего не найдено",
       desc: "Или МБИ временно не отдаёт список оценок",
       try_again: "Обновить",
+      GRADES_DATA_MISMATCH_title: "Неверно введены данные",
+      GRADES_DATA_MISMATCH_desc: "Введённая фамилия не соответствует пин-коду",
     },
 
     schedules: {
@@ -196,7 +216,21 @@ export const i18n = new I18n({
 
     settings: {
       features: "Фишки",
+      teacherMode: "Режим преподавателя",
+      dataForGrades: "Данные для оценок",
+      dataForSchedule: "Данные для расписания",
+      pin: "PIN",
+      enterPin: "ПИН может быть в вашем студаке или договоре",
+      group: "Группа",
+      educationLevel: "Уровень образования",
+      lastName: "Фамилия",
+      enterLastName: "Введите фамилию",
+      blurEffectsTitle: "Включить эффекты размытия",
+      blurEffectsDesc: "Может повлиять на производительность",
     },
+
+    show_teachers_schedule: "Расписание преподавателей",
+    show_groups_schedule: "Расписание групп",
 
     lessonNow: "Сейчас",
   },

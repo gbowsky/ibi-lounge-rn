@@ -23,6 +23,7 @@ const iconsMap: Record<string, SFSymbol> = {
   restart: "restart.circle",
   "dots-horizontal-circle": "ellipsis.circle.fill",
   check: "checkmark",
+  blur: "cube.transparent",
 };
 
 export const GlobalIcon = ({

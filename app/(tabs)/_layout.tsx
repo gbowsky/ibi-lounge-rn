@@ -8,7 +8,7 @@ import { i18n } from "@/lib/localization";
 import { GlobalIcon } from "@/components/ui/GlobalIcon";
 
 export default function TabLayout() {
-  const { mode } = useSettingsStore();
+  const { mode, blurAndroidEnabled } = useSettingsStore();
 
   return (
     <Tabs
@@ -20,12 +20,15 @@ export default function TabLayout() {
           position: "absolute",
         },
         tabBarBackground:
-          Platform.OS === "ios"
+          blurAndroidEnabled || ["ios", "macos"].includes(Platform.OS)
             ? () => {
                 return (
                   <BlurView
+                    experimentalBlurMethod={
+                      blurAndroidEnabled ? "dimezisBlurView" : "none"
+                    }
                     intensity={80}
-                    tint="systemThinMaterial"
+                    tint="systemChromeMaterial"
                     style={StyleSheet.absoluteFill}
                   />
                 );

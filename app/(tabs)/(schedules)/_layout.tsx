@@ -1,4 +1,5 @@
 import { GlobalIcon } from "@/components/ui/GlobalIcon";
+import { i18n } from "@/lib/localization";
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { useTheme } from "@react-navigation/native";
 import { router, Stack } from "expo-router";
@@ -24,8 +25,8 @@ function HeaderRight() {
         >
           <DropDownMenu.ItemTitle>
             {mode === "student"
-              ? "Просмотреть расписание преподавателей"
-              : "Просмотреть расписание групп"}
+              ? i18n.get("show_teachers_schedule")
+              : i18n.get("show_groups_schedule")}
           </DropDownMenu.ItemTitle>
         </DropDownMenu.Item>
         <DropDownMenu.Separator />

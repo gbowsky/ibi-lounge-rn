@@ -63,22 +63,20 @@ export default function DataSetupScreen() {
       </View>
 
       {mode === "student" && (
-        <>
-          <KeyboardAvoidingView style={styles.inputs}>
-            <TextInput
-              label={i18n.get("yourLastName")}
-              placeholder="Введите фамилию"
-              value={lastName}
-              onChangeText={(lastName) => setLastName(lastName)}
-            />
-            <TextInput
-              label={i18n.get("yourPin")}
-              placeholder="Есть в студаке или договоре с вузом"
-              value={pin}
-              onChangeText={(pin) => setPin(pin)}
-            />
-          </KeyboardAvoidingView>
-        </>
+        <KeyboardAvoidingView behavior="padding" style={styles.inputs}>
+          <TextInput
+            label={i18n.get("yourLastName")}
+            placeholder="Введите фамилию"
+            value={lastName}
+            onChangeText={(lastName) => setLastName(lastName)}
+          />
+          <TextInput
+            label={i18n.get("yourPin")}
+            placeholder="Есть в студаке или договоре с вузом"
+            value={pin}
+            onChangeText={(pin) => setPin(pin)}
+          />
+        </KeyboardAvoidingView>
       )}
 
       <Button
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
   },
   inputs: {
     gap: 16,
-    paddingBottom: 48,
+    marginBottom: 48,
     paddingHorizontal: 20,
   },
 });

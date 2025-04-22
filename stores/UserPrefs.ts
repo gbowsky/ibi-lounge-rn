@@ -20,6 +20,7 @@ export interface SettingsStore {
   lastName: string;
   pin: string;
   mode: "student" | "teacher";
+  blurAndroidEnabled: boolean;
 
   setOnboardingPassed: (hasPassed: boolean) => void;
   setGroup: (newGrp: StoredItem) => void;
@@ -28,6 +29,7 @@ export interface SettingsStore {
   setLastName: (lastName: string) => void;
   setPin: (pin: string) => void;
   setMode: (mode: SettingsStore["mode"]) => void;
+  setBlurAndroidEnabled: (enabled: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -40,6 +42,7 @@ export const useSettingsStore = create<SettingsStore>()(
       lastName: "",
       pin: "",
       mode: "student",
+      blurAndroidEnabled: false,
 
       setOnboardingPassed: (hasPassed) => set({ onboardingPassed: hasPassed }),
       setGroup: (newGrp) => {
@@ -65,6 +68,7 @@ export const useSettingsStore = create<SettingsStore>()(
         nativeStorage.set("mode", mode);
         useApiStore.getState().loadSchedules(mode);
       },
+      setBlurAndroidEnabled: (enabled) => set({ blurAndroidEnabled: enabled }),
     }),
     {
       name: "user-prefs",

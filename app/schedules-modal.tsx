@@ -1,5 +1,5 @@
 import { Day } from "@/components/schedules/Day";
-import { CalendarComponent } from "@/components/schedules/WeekSwiper/Calendar";
+import { WeeklyCalendar } from "@/components/schedules/WeeklyCalendar";
 import { GlobalIcon } from "@/components/ui/GlobalIcon";
 import { GlobalScreen } from "@/components/ui/GlobalScreen";
 import { DayItem } from "@/lib/api/schedules";
@@ -69,10 +69,8 @@ export default function SchedulesModal() {
             )}
           </List.Section>
           <Divider />
-          <CalendarComponent
-            date={new Date()}
-            onDatePress={console.log}
-            onWeekSwitch={(date) => {
+          <WeeklyCalendar
+            onDateSelected={(date) => {
               setSelectedDate(date, reverseMode);
             }}
           />
