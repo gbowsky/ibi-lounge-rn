@@ -57,6 +57,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="(links)"
+        options={{
+          title: i18n.get("screens.links"),
+          tabBarIcon: ({ color }) => (
+            <GlobalIcon size={24} icon="link" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="(settings)"
         options={{
           title: i18n.get("screens.settings"),

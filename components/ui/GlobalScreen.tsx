@@ -13,18 +13,11 @@ import {
   View,
   FlatList,
   LayoutChangeEvent,
+  SectionListProps,
+  SectionList,
 } from "react-native";
 import { Appbar, Divider, Surface, Text } from "react-native-paper";
 import { FlatListProps } from "react-native/Libraries/Lists/FlatList";
-
-interface GlobalScreenProps<FlatListDataItem> {
-  largeTitle?: boolean;
-  flatListProps?: Omit<FlatListProps<FlatListDataItem>, "ListHeaderComponent">;
-  scrollViewProps?: ScrollViewProps;
-  footer?: ReactNode;
-  title?: string;
-  modal?: boolean;
-}
 
 const MaterialHeader = ({
   title,
@@ -83,10 +76,27 @@ const SystemFooter = ({
   );
 };
 
-export const GlobalScreen = <FlatListDataItem = undefined,>(
-  props: GlobalScreenProps<FlatListDataItem>,
+interface GlobalScreenProps<FlatListDataItem, SectionDataItem> {
+  largeTitle?: boolean;
+  flatListProps?: Omit<FlatListProps<FlatListDataItem>, "ListHeaderComponent">;
+  sectionListProps?: Omit<
+    SectionListProps<FlatListDataItem, SectionDataItem>,
+    "ListHeaderComponent"
+  >;
+  scrollViewProps?: ScrollViewProps;
+  footer?: ReactNode;
+  title?: string;
+  modal?: boolean;
+}
+
+export const GlobalScreen = <
+  FlatListDataItem = undefined,
+  SectionDataItem = undefined,
+>(
+  props: GlobalScreenProps<FlatListDataItem, SectionDataItem>,
 ) => {
   const {
+    sectionListProps,
     flatListProps,
     scrollViewProps,
     largeTitle,
@@ -139,6 +149,37 @@ export const GlobalScreen = <FlatListDataItem = undefined,>(
   const globalFooterLayoutHandler = (event: LayoutChangeEvent) => {
     setFooterHeight(event.nativeEvent.layout.height);
   };
+
+  if (sectionListProps) {
+    return (
+      <View style={styles.root}>
+        <SectionList
+          {...sectionListProps}
+          contentInsetAdjustmentBehavior="automatic"
+          automaticallyAdjustContentInsets
+          automaticallyAdjustKeyboardInsets
+          automaticallyAdjustsScrollIndicatorInsets
+          onScroll={globalScreenScrollHandler}
+          ListHeaderComponent={
+            shouldEnableLargeTitleQuirk ? (
+              <MaterialHeader title={title} transparent={isTransparent} />
+            ) : undefined
+          }
+          ListFooterComponent={
+            <View style={{ height: tabbarHeight + footerHeight }} />
+          }
+        />
+        {footer && (
+          <View
+            onLayout={globalFooterLayoutHandler}
+            style={{ ...styles.footer, bottom: tabbarHeight }}
+          >
+            <SystemFooter paddingBottom={modal ? 24 : 0}>{footer}</SystemFooter>
+          </View>
+        )}
+      </View>
+    );
+  }
 
   if (flatListProps) {
     return (

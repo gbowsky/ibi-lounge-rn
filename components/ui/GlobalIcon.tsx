@@ -24,6 +24,7 @@ const iconsMap: Record<string, SFSymbol> = {
   "dots-horizontal-circle": "ellipsis.circle.fill",
   check: "checkmark",
   blur: "cube.transparent",
+  link: "link",
 };
 
 export const GlobalIcon = ({

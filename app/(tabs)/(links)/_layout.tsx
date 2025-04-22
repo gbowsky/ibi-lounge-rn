@@ -2,12 +2,12 @@ import { i18n } from "@/lib/localization";
 import { Stack } from "expo-router";
 import { Platform, View } from "react-native";
 
-const GradesTab = () => {
+const LinksTab = () => {
   return (
     <View style={{ flex: 1 }}>
       <Stack>
         <Stack.Screen
-          name="settings"
+          name="links"
           options={{
             headerShown: true,
             contentStyle: {
@@ -17,7 +17,7 @@ const GradesTab = () => {
             headerTransparent: Platform.OS === "ios",
             headerBlurEffect:
               Platform.OS === "ios" ? "systemThinMaterial" : undefined,
-            title: i18n.get("screens.settings"),
+            title: i18n.get("screens.links"),
             headerLargeStyle: {
               backgroundColor: "transparent",
             },
@@ -29,4 +29,4 @@ const GradesTab = () => {
   );
 };
 
-export default GradesTab;
+export default LinksTab;

@@ -17,14 +17,16 @@
       "appleTeamId": "89P49T5697",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#087A83"
       },
-      "package": "space.utme.raspisansu"
+      "package": "space.utme.raspisansu",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",

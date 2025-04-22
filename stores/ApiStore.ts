@@ -4,12 +4,14 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { createGradesSlice, GradesSlice } from "./api/GradesSlice";
 import { createSchedulesSlice, SchedulesSlice } from "./api/SchedulesSlice";
+import { createLinksSlice, LinksSlice } from "./api/LinksSlice";
 
-export const useApiStore = create<GradesSlice & SchedulesSlice>()(
+export const useApiStore = create<GradesSlice & SchedulesSlice & LinksSlice>()(
   persist(
     (...a) => ({
       ...createGradesSlice(...a),
       ...createSchedulesSlice(...a),
+      ...createLinksSlice(...a),
     }),
     {
       name: "api-store",

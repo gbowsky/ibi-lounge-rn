@@ -1,6 +1,12 @@
 export const BASE_URL = "https://lounge.utme.space/";
 
-type GetPaths = "schedules" | "groups" | "teachers" | "grades" | "levels";
+type GetPaths =
+  | "schedules"
+  | "groups"
+  | "teachers"
+  | "grades"
+  | "levels"
+  | "links";
 
 export function makeApiRequestUrl(
   path: GetPaths,

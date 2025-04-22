@@ -1,3 +1,4 @@
+import { i18n } from "@/lib/localization";
 import { Stack } from "expo-router";
 import { Platform, View } from "react-native";
 
@@ -16,7 +17,7 @@ const GradesTab = () => {
             headerTransparent: Platform.OS === "ios",
             headerBlurEffect:
               Platform.OS === "ios" ? "systemThinMaterial" : undefined,
-            title: "Оценки",
+            title: i18n.get("screens.grades"),
             headerLargeStyle: {
               backgroundColor: "transparent",
             },

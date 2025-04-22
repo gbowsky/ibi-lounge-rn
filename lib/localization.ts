@@ -5,9 +5,10 @@ import { shadow } from "react-native-paper";
 export const i18n = new I18n({
   en: {
     screens: {
-      schedules: "Расписание",
-      grades: "Оценки",
-      settings: "Настройки",
+      schedules: "Schedules",
+      grades: "Grades",
+      settings: "Settings",
+      links: "Links",
     },
     setup: {
       welcome: "Welcome to\nIBI Lounge!",
@@ -20,8 +21,8 @@ export const i18n = new I18n({
     },
     welcome: "Welcome to\nIBI Lounge!",
     description:
-      "Здесь вы сможете просматривать своё расписание и оценки, а также посещать ресурсы Международного банковского института",
-    continue: "Продолжить",
+      "Here you can view your class schedules, grades and resources of International Banking Institure",
+    continue: "Continue",
     step2title: "Are you studying or teaching?",
     iAmStudent: "I'm a student",
     iAmTeacher: "I'm a teacher",
@@ -81,6 +82,18 @@ export const i18n = new I18n({
         "The entered last name does not match the PIN code",
     },
 
+    no_links: {
+      title: "No links",
+      desc: "Or IBI's site decided to go down temporarily",
+      try_again: "Reload",
+    },
+
+    links: {
+      eos: "Unified Digital Learning Environment (Moodle)",
+      contacts: "Contacts",
+      employees: "Teaching Staff",
+    },
+
     calendar: {
       title: "Add schedule to calendar app",
       description:
@@ -117,6 +130,7 @@ export const i18n = new I18n({
       schedules: "Расписание",
       grades: "Оценки",
       settings: "Настройки",
+      links: "Ссылки",
     },
     setup: {
       welcome: "Встречайте\nIBI Lounge!",
@@ -197,6 +211,12 @@ export const i18n = new I18n({
       GRADES_DATA_MISMATCH_desc: "Введённая фамилия не соответствует пин-коду",
     },
 
+    no_links: {
+      title: "Нет ссылок",
+      desc: "Или МБИ временно не отдаёт ссылки",
+      try_again: "Обновить",
+    },
+
     schedules: {
       unknown_teacher: "Неизвестный преподаватель",
       lesson_now: "Сейчас",
@@ -212,6 +232,12 @@ export const i18n = new I18n({
       subscribe: "Подписаться на расписание ",
       link: "Ваша ссылка:",
       close: "Отмена",
+    },
+
+    links: {
+      eos: "Единая электронная образовательная среда (ЕЭОС)",
+      contacts: "Контакты",
+      employees: "Педагогический состав",
     },
 
     settings: {

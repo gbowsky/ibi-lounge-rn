@@ -49,7 +49,7 @@ const SchedulesTab = () => {
             headerTransparent: Platform.OS === "ios",
             headerBlurEffect:
               Platform.OS === "ios" ? "systemThinMaterial" : undefined,
-            title: "Расписание",
+            title: i18n.get("screens.schedules"),
             headerLargeStyle: {
               backgroundColor: "transparent",
             },
