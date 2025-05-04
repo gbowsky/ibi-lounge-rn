@@ -2,6 +2,7 @@ import { makeApiRequestUrl } from "./url";
 
 export interface LinkItem {
   text: string;
+  translated?: string;
   href: string;
 }
 

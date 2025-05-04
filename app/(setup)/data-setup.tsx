@@ -1,4 +1,5 @@
 import { GlobalIcon } from "@/components/ui/GlobalIcon";
+import { OnboardingIllustrations } from "@/components/ui/OnboardingIllustrations";
 import { i18n } from "@/lib/localization";
 import { useApiStore } from "@/stores/ApiStore";
 import { useSettingsStore } from "@/stores/UserPrefs";
@@ -23,7 +24,11 @@ export default function DataSetupScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.paddedH} variant="displayMedium">
+      <OnboardingIllustrations />
+      <Text
+        style={[styles.paddedH, { fontFamily: "RobotoSlab-Regular" }]}
+        variant="displayMedium"
+      >
         {i18n.get("setup.step3title")}
       </Text>
       <View style={styles.section}>
@@ -80,7 +85,7 @@ export default function DataSetupScreen() {
       )}
 
       <Button
-        style={styles.insetH}
+        style={[styles.insetH, styles.button]}
         mode="contained"
         onPress={() => {
           setOnboardingPassed(true);
@@ -113,5 +118,8 @@ const styles = StyleSheet.create({
     gap: 16,
     marginBottom: 48,
     paddingHorizontal: 20,
+  },
+  button: {
+    marginBottom: 12,
   },
 });

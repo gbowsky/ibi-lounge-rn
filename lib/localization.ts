@@ -80,6 +80,8 @@ export const i18n = new I18n({
       GRADES_DATA_MISMATCH_title: "Data mismatch",
       GRADES_DATA_MISMATCH_desc:
         "The entered last name does not match the PIN code",
+      FST_ERR_VALIDATION_title: "Validation error",
+      FST_ERR_VALIDATION_desc: "Please check your input and try again",
     },
 
     no_links: {
@@ -209,6 +211,8 @@ export const i18n = new I18n({
       try_again: "Обновить",
       GRADES_DATA_MISMATCH_title: "Неверно введены данные",
       GRADES_DATA_MISMATCH_desc: "Введённая фамилия не соответствует пин-коду",
+      FST_ERR_VALIDATION_title: "Неверные данные",
+      FST_ERR_VALIDATION_desc: "Проверьте правильность введённых данных",
     },
 
     no_links: {

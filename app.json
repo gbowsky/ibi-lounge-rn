@@ -2,7 +2,7 @@
   "expo": {
     "name": "IBI Lounge",
     "slug": "lounge-app",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "raspisansu",
@@ -23,10 +23,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#087A83"
+        "backgroundColor": "#101010"
       },
-      "package": "space.utme.raspisansu",
-      "versionCode": 2
+      "package": "space.utme.loungeapp",
+      "versionCode": 4,
+      "version": "1.1.1"
     },
     "web": {
       "bundler": "metro",
@@ -41,7 +42,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#087A83"
+          "backgroundColor": "#101010"
         }
       ],
       "expo-localization",

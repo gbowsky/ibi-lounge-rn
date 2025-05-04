@@ -4,14 +4,21 @@ import { Button, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { i18n } from "@/lib/localization";
 import { useSettingsStore } from "@/stores/UserPrefs";
+import { OnboardingIllustrations } from "@/components/ui/OnboardingIllustrations";
 
 export default function SetupScreen() {
   const { setMode } = useSettingsStore();
 
   return (
     <SafeAreaView style={styles.container}>
+      <OnboardingIllustrations />
       <View style={styles.texts}>
-        <Text variant="displayLarge">{i18n.get("setup.welcome")}</Text>
+        <Text
+          style={{ fontFamily: "RobotoSlab-Regular" }}
+          variant="displayLarge"
+        >
+          {i18n.get("setup.welcome")}
+        </Text>
         <Text variant="bodyLarge">{i18n.get("setup.description")}</Text>
       </View>
       <View style={styles.aside}>
@@ -52,5 +59,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
+    marginBottom: 12,
   },
 });

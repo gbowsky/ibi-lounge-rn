@@ -23,7 +23,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="myapp"/>
+        <data android:scheme="raspisansu"/>
+        <data android:scheme="space.utme.raspisansu"/>
         <data android:scheme="space.utme.loungeapp"/>
       </intent-filter>
     </activity>

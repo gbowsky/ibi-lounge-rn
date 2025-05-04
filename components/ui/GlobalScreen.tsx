@@ -37,7 +37,10 @@ const MaterialHeader = ({
       }}
       mode="small"
     >
-      <Appbar.Content title={title} />
+      <Appbar.Content
+        titleStyle={{ fontFamily: "RobotoSlab-Medium", fontSize: 20 }}
+        title={title}
+      />
     </Appbar.Header>
   );
 };
@@ -113,6 +116,14 @@ export const GlobalScreen = <
   const [isTransparent, setTransparent] = useState(true);
 
   useEffect(() => {
+    navigation.setOptions({
+      headerTitleStyle: {
+        fontFamily: "RobotoSlab-Medium",
+      },
+      headerLargeTitleStyle: {
+        fontFamily: "RobotoSlab-Medium",
+      },
+    });
     if (Platform.OS !== "android" || !largeTitle || !navigation || modal) {
       return;
     }
@@ -130,6 +141,14 @@ export const GlobalScreen = <
   const globalScreenScrollHandler = (
     event: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
+    navigation.setOptions({
+      headerTitleStyle: {
+        fontFamily: "RobotoSlab-Medium",
+      },
+      headerLargeTitleStyle: {
+        fontFamily: "RobotoSlab-Medium",
+      },
+    });
     if (Platform.OS !== "android" || !largeTitle || modal) {
       return;
     }

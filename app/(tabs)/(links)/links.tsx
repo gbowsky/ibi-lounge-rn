@@ -13,15 +13,18 @@ const HARD_LINKS_SECTION: SectionItem[] = [
     title: "Полезные ссылки",
     data: [
       {
-        text: i18n.get("links.eos"),
+        translated: "links.eos",
+        text: "ЕЭОС",
         href: "https://lms.ibispb.ru",
       },
       {
-        text: i18n.get("links.employees"),
+        translated: "links.employees",
+        text: "Педагогический состав",
         href: "https://ibispb.ru/sveden/employees/",
       },
       {
-        text: i18n.get("links.contacts"),
+        translated: "links.contacts",
+        text: "Контакты",
         href: "https://ibispb.ru/contacts/",
       },
     ],
@@ -62,7 +65,7 @@ export default function LinksScreen({}) {
               }
             }}
             key={`link-${index}`}
-            title={item.text}
+            title={item.translated ? i18n.get(item.translated) : item.text}
             titleNumberOfLines={4}
             left={({ color, style }) => (
               <View style={style}>

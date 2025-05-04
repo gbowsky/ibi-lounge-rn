@@ -15,6 +15,7 @@ import { getLocales } from "expo-localization";
 import { setDefaultOptions } from "date-fns";
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { GlobalBackground } from "@/components/ui/GlobalBackground";
+import { useFonts } from "expo-font";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -25,9 +26,16 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const { mode } = useSettingsStore();
 
+  const [loaded, error] = useFonts({
+    "RobotoSlab-Regular": require("../assets/fonts/RobotoSlab-Regular.ttf"),
+    "RobotoSlab-Medium": require("../assets/fonts/RobotoSlab-Medium.ttf"),
+  });
+
   useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

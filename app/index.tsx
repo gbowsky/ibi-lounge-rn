@@ -1,4 +1,5 @@
 import { StyleSheet, View } from "react-native";
+import { useFonts } from "expo-font";
 
 import { useEffect } from "react";
 import { useHydration, useSettingsStore } from "@/stores/UserPrefs";
