@@ -1,17 +1,9 @@
 {
-  "platforms": [
-    "apple",
-    "android",
-    "web"
-  ],
+  "platforms": ["ios", "android", "web"],
   "apple": {
-    "modules": [
-      "SchedulesSettingsModule"
-    ]
+    "modules": ["SchedulesSettingsModule"]
   },
   "android": {
-    "modules": [
-      "space.utme.schedulesSettings.SchedulesSettingsModule"
-    ]
+    "modules": ["space.utme.schedulesSettings.SchedulesSettingsModule"]
   }
 }

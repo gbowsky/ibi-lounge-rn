@@ -9,6 +9,7 @@ export const i18n = new I18n({
       grades: "Grades",
       settings: "Settings",
       links: "Links",
+      news: "News",
     },
     setup: {
       welcome: "Welcome to\nIBI Lounge!",
@@ -52,6 +53,7 @@ export const i18n = new I18n({
       library_day: "📚Library day",
       project_work: "⚒️Project work",
       meeting: "📅Meeting",
+      online: "Online",
     },
     online: "🌎Online",
 
@@ -126,6 +128,10 @@ export const i18n = new I18n({
     show_teachers_schedule: "Teachers schedules",
 
     lessonNow: "Now",
+
+    news: {
+      updated_at: "Last update at",
+    },
   },
   ru: {
     screens: {
@@ -133,6 +139,7 @@ export const i18n = new I18n({
       grades: "Оценки",
       settings: "Настройки",
       links: "Ссылки",
+      news: "Новости",
     },
     setup: {
       welcome: "Встречайте\nIBI Lounge!",
@@ -263,5 +270,9 @@ export const i18n = new I18n({
     show_groups_schedule: "Расписание групп",
 
     lessonNow: "Сейчас",
+
+    news: {
+      updated_at: "Обновлено в",
+    },
   },
 });

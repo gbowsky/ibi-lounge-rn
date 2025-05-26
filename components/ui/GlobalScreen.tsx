@@ -52,11 +52,17 @@ const SystemFooter = ({
   const nativeTheme = useTheme();
   const { blurAndroidEnabled } = useSettingsStore();
 
-  if (Platform.OS === "ios" || blurAndroidEnabled) {
+  if (["ios", "macos"].includes(Platform.OS) || blurAndroidEnabled) {
     return (
       <BlurView
         experimentalBlurMethod="dimezisBlurView"
-        tint="systemChromeMaterial"
+        tint={
+          !blurAndroidEnabled
+            ? "systemChromeMaterial"
+            : nativeTheme.dark
+              ? "systemChromeMaterialDark"
+              : "systemChromeMaterialLight"
+        }
         intensity={100}
       >
         <Divider />

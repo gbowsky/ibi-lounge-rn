@@ -6,7 +6,8 @@ type GetPaths =
   | "teachers"
   | "grades"
   | "levels"
-  | "links";
+  | "links"
+  | "news";
 
 export function makeApiRequestUrl(
   path: GetPaths,

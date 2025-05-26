@@ -24,7 +24,11 @@ export default function SchedulesModal() {
   return (
     <GlobalScreen<DayItem>
       modal
-      title="Расписание преподавателей"
+      title={
+        mode === "student"
+          ? i18n.get("show_teachers_schedule")
+          : i18n.get("show_groups_schedule")
+      }
       flatListProps={{
         refreshing: schedulesLoading,
         onRefresh: () => loadSchedules(reverseMode),
@@ -42,14 +46,14 @@ export default function SchedulesModal() {
                   style={styles.hPadded}
                   onPress={() => router.push("/levels")}
                   left={() => <List.Icon icon="school-outline" />}
-                  title="Уровень образования"
+                  title={i18n.get("settings.educationLevel")}
                   description={educationLevel.name}
                 />
                 <List.Item
                   style={styles.hPadded}
                   onPress={() => router.push("/groups")}
                   left={() => <List.Icon icon="folder-outline" />}
-                  title="Ваша группа"
+                  title={i18n.get("settings.group")}
                   description={group.name}
                 />
               </>

@@ -1,14 +1,15 @@
 import { Tabs } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useSettingsStore } from "@/stores/UserPrefs";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
 import { i18n } from "@/lib/localization";
 import { GlobalIcon } from "@/components/ui/GlobalIcon";
+import { useTheme } from "react-native-paper";
 
 export default function TabLayout() {
   const { mode, blurAndroidEnabled } = useSettingsStore();
+  const { dark } = useTheme();
 
   return (
     <Tabs
@@ -28,7 +29,13 @@ export default function TabLayout() {
                       blurAndroidEnabled ? "dimezisBlurView" : "none"
                     }
                     intensity={80}
-                    tint="systemChromeMaterial"
+                    tint={
+                      !blurAndroidEnabled
+                        ? "systemChromeMaterial"
+                        : dark
+                          ? "systemChromeMaterialDark"
+                          : "systemChromeMaterialLight"
+                    }
                     style={StyleSheet.absoluteFill}
                   />
                 );
@@ -53,6 +60,15 @@ export default function TabLayout() {
           title: i18n.get("screens.grades"),
           tabBarIcon: ({ color }) => (
             <GlobalIcon size={24} icon="format-list-text" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(news)"
+        options={{
+          title: i18n.get("screens.news"),
+          tabBarIcon: ({ color }) => (
+            <GlobalIcon size={24} icon="newspaper" color={color} />
           ),
         }}
       />

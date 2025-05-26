@@ -25,6 +25,9 @@ const iconsMap: Record<string, SFSymbol> = {
   check: "checkmark",
   blur: "cube.transparent",
   link: "link",
+  newspaper: "newspaper",
+  pin: "pin.fill",
+  "triangle-outline": "exclamationmark.triangle",
 };
 
 export const GlobalIcon = ({
