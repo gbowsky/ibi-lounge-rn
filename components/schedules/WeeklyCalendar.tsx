@@ -4,22 +4,14 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Dimensions,
   ViewToken,
   TouchableOpacity,
+  useWindowDimensions,
 } from "react-native";
-import { BlurView } from "expo-blur";
-import {
-  format,
-  addWeeks,
-  subWeeks,
-  startOfWeek,
-  eachDayOfInterval,
-} from "date-fns";
+import { addWeeks, startOfWeek, eachDayOfInterval } from "date-fns";
 import { useTheme } from "@react-navigation/native";
 import { formatDate } from "@/lib/dates";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
+import { useDebounceValue } from "usehooks-ts";
 
 type CalendarDay = {
   date: Date;
@@ -52,20 +44,37 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(50);
   const [currentDate, setCurrentDate] = useState(getDateFromIndex(50));
+  const { width: bouncingWidth } = useWindowDimensions();
+  const [width, setDebouncedWidth] = useDebounceValue(bouncingWidth, 500);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     onDateSelected?.(currentDate);
   }, [currentDate]);
 
+  useEffect(() => {
+    setDebouncedWidth(bouncingWidth);
+    if (!disabled) {
+      setDisabled(true);
+    }
+  }, [bouncingWidth]);
+
+  useEffect(() => {
+    setDisabled(false);
+  }, [width]);
+
   const renderWeek = ({ index }: { index: number }) => {
     const date = getDateFromIndex(index);
     const days = getWeekDays(date);
     return (
-      <View style={styles.weekContainer}>
+      <View style={{ ...styles.weekContainer, width }}>
         {days.map((item) => (
           <View
             key={item.date.toString()}
-            style={[styles.dayBox, { backgroundColor: colors.card }]}
+            style={[
+              styles.dayBox,
+              { backgroundColor: colors.card, width: width / 7 - 8 },
+            ]}
           >
             <Text style={[styles.dayOfWeek, { color: colors.text }]}>
               {item.dayOfWeek}
@@ -99,7 +108,7 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={{ ...styles.header, width: width }}>
         <Text style={[styles.monthLabel, { color: colors.text }]}>
           {monthLabel}
         </Text>
@@ -108,23 +117,31 @@ export const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        ref={flatListRef}
-        data={Array.from({ length: 100 }, (_, i) => i)}
-        keyExtractor={(item) => item.toString()}
-        renderItem={renderWeek}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        initialScrollIndex={50}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{ itemVisiblePercentThreshold: 80 }}
-        getItemLayout={(_, index) => ({
-          length: SCREEN_WIDTH,
-          offset: SCREEN_WIDTH * index,
-          index,
-        })}
-      />
+      {disabled && (
+        <View style={[styles.dayBox, { opacity: 0 }]}>
+          <Text style={[styles.dayOfWeek, { color: colors.text }]}>AB</Text>
+          <Text style={[styles.dayOfMonth, { color: colors.text }]}>CD</Text>
+        </View>
+      )}
+      {!disabled && (
+        <FlatList
+          ref={flatListRef}
+          data={Array.from({ length: 100 }, (_, i) => i)}
+          keyExtractor={(item) => item.toString()}
+          renderItem={renderWeek}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          initialScrollIndex={50}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={{ itemVisiblePercentThreshold: 80 }}
+          getItemLayout={(_, index) => ({
+            length: width,
+            offset: width * index,
+            index,
+          })}
+        />
+      )}
 
       <View style={{ height: 16 }} />
     </View>
@@ -138,7 +155,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   header: {
-    width: SCREEN_WIDTH,
     paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -161,12 +177,10 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   weekContainer: {
-    width: SCREEN_WIDTH,
     flexDirection: "row",
     justifyContent: "center",
   },
   dayBox: {
-    width: SCREEN_WIDTH / 7 - 8,
     marginHorizontal: 4,
     paddingVertical: 8,
     paddingHorizontal: 6,
