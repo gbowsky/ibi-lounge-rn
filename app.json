@@ -12,7 +12,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "space.utme.raspisansu",
       "entitlements": {
-        "com.apple.security.application-groups": ["group.space.utme.raspisansu"]
+        "com.apple.security.application-groups": [
+          "group.space.utme.raspisansu"
+        ]
       },
       "appleTeamId": "89P49T5697",
       "infoPlist": {
@@ -46,7 +48,9 @@
         }
       ],
       "expo-localization",
-      "@bacons/apple-targets"
+      "@bacons/apple-targets",
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
